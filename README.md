@@ -106,8 +106,14 @@ Run these in **Supabase Dashboard → SQL Editor**, in order:
    auto-create-on-signup trigger, `set_admin()` RPC.
 3. `supabase/migrations/0003_app_data.sql` — `application_tracker`,
    `study_plans`, `essays` (all owner-only via RLS).
+4. `supabase/migrations/0004_security_hardening.sql` — admin-only content
+   imports/storage access, protected profile admin roles, and admin-only
+   review queues. Apply this migration before enabling public signups or
+   using the admin import tools on an existing Supabase project.
 
-All three are safe to re-run (`if not exists` / `if exists` guards).
+These migrations are designed to be safe to re-run. The security hardening
+migration replaces the broad write policies from `0001`; existing projects
+remain on their current policies until `0004` is run in Supabase SQL Editor.
 
 ### Bootstrapping your first admin
 
@@ -167,7 +173,7 @@ Every subsequent `git push` to `main` triggers a new deploy automatically.
   `"use client"` directive, both quick fixes.
 - **Admin pages redirect you to `/dashboard`** — your `profiles.is_admin` is
   false; run the bootstrap SQL in section 4.
-- **`/admin/scan` shows "Connected: NO"** — check that migrations 1–3 ran
+- **`/admin/scan` shows "Connected: NO"** — check that migrations 1–4 ran
   without error, and that your `.env.local`/Vercel env vars match section 3
   exactly (no quotes, no trailing spaces).
 - **Bucket shows "No files found"** but you know files are there — check the
@@ -191,7 +197,7 @@ uniway/
 │   ├── supabase/         # browser + server Supabase clients
 │   └── types.ts
 ├── supabase/
-│   ├── migrations/       # 0001, 0002, 0003 — run in order
+│   ├── migrations/       # 0001–0004 — run in order
 │   └── functions/import-sat-ielts/  # Edge Function skeleton for PDFs
 ├── middleware.ts         # session refresh + /admin route protection
 └── .env.example
