@@ -110,6 +110,7 @@ Run these in **Supabase Dashboard → SQL Editor**, in order:
    imports/storage access, protected profile admin roles, and admin-only
    review queues. Apply this migration before enabling public signups or
    using the admin import tools on an existing Supabase project.
+5. `supabase/migrations/0005_question_bank_seed.sql` — original SAT/IELTS practice material and private IELTS writing drafts.
 
 These migrations are designed to be safe to re-run. The security hardening
 migration replaces the broad write policies from `0001`; existing projects
@@ -161,10 +162,8 @@ Every subsequent `git push` to `main` triggers a new deploy automatically.
    **Queue** (writes an `import_jobs` row with `status: 'queued'` for the
    Edge Function to pick up later) or download a template and hand-convert.
 4. Go to `/admin/review` to confirm/fix anything flagged `needs_review`.
-5. `/sat` and `/ielts` immediately reflect whatever is in the Database —
-   there is no hardcoded fallback question bank in this version; an empty
-   table means the page says so plainly ("Your question bank is currently
-   empty"), never a fake question.
+5. Run migration `0005_question_bank_seed.sql` to add 16 original SAT questions, an original IELTS reading passage with 8 questions, 4 Writing tasks, and 8 Speaking prompts. These are independent UNIWAY practice items, not official exam questions.
+6. `/sat` and `/ielts` read reviewed material from the database. IELTS writing drafts are private to the signed-in student; AI feedback needs `ANTHROPIC_API_KEY`.
 
 ## 7. Troubleshooting
 
@@ -197,7 +196,7 @@ uniway/
 │   ├── supabase/         # browser + server Supabase clients
 │   └── types.ts
 ├── supabase/
-│   ├── migrations/       # 0001–0004 — run in order
+│   ├── migrations/       # 0001–0005 — run in order
 │   └── functions/import-sat-ielts/  # Edge Function skeleton for PDFs
 ├── middleware.ts         # session refresh + /admin route protection
 └── .env.example

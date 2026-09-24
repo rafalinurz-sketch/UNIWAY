@@ -16,6 +16,7 @@ const TABLES = [
   "import_jobs",
   "question_review_queue",
   "user_attempts",
+  "ielts_writing_submissions",
   "application_tracker",
 ];
 

@@ -13,6 +13,7 @@ export default function HomePage() {
     <>
       <section className="relative overflow-hidden border-b border-line">
         <div aria-hidden="true" className="pointer-events-none absolute -right-28 -top-24 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
+        <div aria-hidden="true" className="cosmic-orb pointer-events-none absolute right-[8%] top-12 hidden h-24 w-24 rounded-full opacity-35 lg:block" />
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[1.1fr,0.9fr] lg:py-24">
           <div>
             <span className="pill border border-accent/20 bg-accent/10 text-accent-light">A clearer admissions workspace</span>

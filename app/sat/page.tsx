@@ -10,7 +10,7 @@ export default function SatPage() {
   const [error, setError] = useState<string | null>(null);
   const [session, setSession] = useState<SatQuestion[] | null>(null);
   const [topic, setTopic] = useState("");
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   useEffect(() => {
     supabase
@@ -37,8 +37,17 @@ export default function SatPage() {
 
   return (
     <section className="mx-auto max-w-4xl px-6 py-10">
-      <span className="text-sm font-bold text-accent-light">SAT Preparation</span>
-      <h1 className="mt-2 text-2xl font-extrabold">Practice with your real materials.</h1>
+      <div className="card relative mb-5 overflow-hidden border-accent/20 bg-gradient-to-br from-accent/[0.12] via-surface to-blue-500/[0.06]">
+        <div aria-hidden="true" className="pointer-events-none absolute -right-8 -top-16 h-44 w-44 rounded-full bg-accent/15 blur-3xl" />
+        <div className="relative flex items-center gap-4">
+          <span aria-hidden="true" className="cosmic-orb hidden h-14 w-14 shrink-0 rounded-full sm:block" />
+          <div>
+            <span className="text-sm font-bold text-accent-light">SAT · PRACTICE STATION</span>
+            <h1 className="mt-1 text-2xl font-extrabold">Build your score one question at a time.</h1>
+            <p className="mt-2 text-sm text-ink-soft">Original UNIWAY practice set, with clear explanations after each answer.</p>
+          </div>
+        </div>
+      </div>
 
       {error && <p className="card-flat mt-4 bg-red-500/10 text-sm text-red-400">Could not load questions: {error}</p>}
 
@@ -48,8 +57,7 @@ export default function SatPage() {
         <div className="card mt-6 text-center">
           <p className="font-semibold">Your question bank is currently empty.</p>
           <p className="mt-2 text-sm text-ink-soft">
-            Import your SAT materials via <code>/admin/import</code> (admin only) — nothing is shown here until real
-            questions exist in the <code>sat_questions</code> table.
+            Run Supabase migrations <code>0001–0005</code> to load the original UNIWAY set, or add your own reviewed materials via <code>/admin/import</code>.
           </p>
         </div>
       )}

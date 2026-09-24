@@ -88,6 +88,10 @@ drop policy if exists "Admins manage sat_questions" on public.sat_questions;
 drop policy if exists "Admins manage ielts_reading_tests" on public.ielts_reading_tests;
 drop policy if exists "Admins manage ielts_reading_passages" on public.ielts_reading_passages;
 drop policy if exists "Admins manage ielts_reading_questions" on public.ielts_reading_questions;
+drop policy if exists "Admins manage ielts_listening_tests" on public.ielts_listening_tests;
+drop policy if exists "Admins manage ielts_listening_questions" on public.ielts_listening_questions;
+drop policy if exists "Admins manage ielts_writing_tasks" on public.ielts_writing_tasks;
+drop policy if exists "Admins manage ielts_speaking_prompts" on public.ielts_speaking_prompts;
 drop policy if exists "Admins manage import_jobs" on public.import_jobs;
 drop policy if exists "Admins manage import_errors" on public.import_errors;
 drop policy if exists "Admins manage question_review_queue" on public.question_review_queue;
@@ -104,6 +108,14 @@ create policy "Admins manage ielts_reading_tests" on public.ielts_reading_tests
 create policy "Admins manage ielts_reading_passages" on public.ielts_reading_passages
   for all to authenticated using (public.is_admin()) with check (public.is_admin());
 create policy "Admins manage ielts_reading_questions" on public.ielts_reading_questions
+  for all to authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Admins manage ielts_listening_tests" on public.ielts_listening_tests
+  for all to authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Admins manage ielts_listening_questions" on public.ielts_listening_questions
+  for all to authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Admins manage ielts_writing_tasks" on public.ielts_writing_tasks
+  for all to authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Admins manage ielts_speaking_prompts" on public.ielts_speaking_prompts
   for all to authenticated using (public.is_admin()) with check (public.is_admin());
 create policy "Admins manage import_jobs" on public.import_jobs
   for all to authenticated using (public.is_admin()) with check (public.is_admin());
