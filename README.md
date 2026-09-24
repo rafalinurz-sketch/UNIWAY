@@ -76,8 +76,11 @@ git push -u origin main
 
 ## 3. Environment variables
 
-Copy `.env.example` to `.env.local` for local dev. In Vercel, add the same
-variables under **Project → Settings → Environment Variables**:
+Copy `.env.example` to `.env.local` for local dev. The repository includes
+the project's public Supabase defaults so first-time Vercel builds can work
+without manual setup. Set these variables under **Project → Settings →
+Environment Variables** to override them when deploying to a different
+Supabase project:
 
 | Variable | Where it's used | Secret? |
 |---|---|---|
