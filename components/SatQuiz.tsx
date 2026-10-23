@@ -60,14 +60,29 @@ export default function SatQuiz({ questions, onExit }: { questions: SatQuestion[
 
   if (done) {
     const correct = answers.filter((a) => a.correct).length;
+    const wrong = answers.filter((a) => !a.correct);
     return (
-      <div className="card text-center">
-        <h2 className="text-xl font-extrabold">You got {correct} of {answers.length} correct</h2>
-        <p className="mt-2 text-sm text-ink-soft">Practice-set accuracy only; this is not an official or scaled SAT score.</p>
-        {attemptStatus && <p role="status" className="mt-3 text-xs text-ink-soft">{attemptStatus}</p>}
-        <button onClick={onExit} className="btn-primary mt-5">
-          Back to SAT Dashboard
-        </button>
+      <div className="space-y-4">
+        <div className="card text-center">
+          <p className="text-xs font-bold uppercase tracking-[.16em] text-accent-light">Practice complete</p>
+          <h2 className="mt-2 text-xl font-extrabold">You got {correct} of {answers.length} correct</h2>
+          <p className="mt-2 text-sm text-ink-soft">Practice-set accuracy only; this is not an official or scaled SAT score.</p>
+          {attemptStatus && <p role="status" className="mt-3 text-xs text-ink-soft">{attemptStatus}</p>}
+          <button onClick={onExit} className="btn-primary mt-5">Back to SAT Dashboard</button>
+        </div>
+        {wrong.length > 0 && <section className="card" aria-labelledby="mistakes-heading">
+          <div className="flex flex-wrap items-end justify-between gap-2"><div><p className="text-xs font-bold uppercase tracking-wider text-accent-light">Learn from each miss</p><h3 id="mistakes-heading" className="mt-1 text-lg font-extrabold">Mistake review · {wrong.length}</h3></div><span className="text-xs text-ink-soft">Your answer and the explanation</span></div>
+          <ol className="mt-4 space-y-3">{wrong.map((answer) => {
+            const question = questions.find((item) => item.id === answer.questionId)!;
+            return <li key={answer.questionId} className="rounded-xl border border-line bg-white/[.025] p-4">
+              <p className="text-xs font-semibold text-ink-soft">{question.topic} · {question.section === "math" ? "Math" : "Reading & Writing"}</p>
+              <p className="mt-2 text-sm font-semibold">{question.question}</p>
+              <p className="mt-2 text-sm text-red-300">Your answer: {question.choices[answer.selected]}</p>
+              <p className="mt-1 text-sm text-emerald-300">Correct answer: {question.choices[question.correct_index ?? 0]}</p>
+              {question.explanation && <p className="mt-2 border-t border-line pt-2 text-sm leading-6 text-ink-soft">{question.explanation}</p>}
+            </li>;
+          })}</ol>
+        </section>}
       </div>
     );
   }
@@ -93,7 +108,7 @@ export default function SatQuiz({ questions, onExit }: { questions: SatQuestion[
               <button
                 key={i}
                 onClick={() => pick(i)}
-                className={`rounded-xl border px-4 py-3 text-left text-sm ${
+                className={`choice-button rounded-xl border px-4 py-3 text-left text-sm ${
                   isCorrect ? "border-emerald-500 bg-emerald-500/10" : isWrong ? "border-red-500 bg-red-500/10" : "border-line"
                 }`}
               >

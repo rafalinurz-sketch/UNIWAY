@@ -12,10 +12,10 @@ type ReadingResult = { correct: number; total: number };
 
 export default function IeltsPage() {
   const [tab, setTab] = useState<Tab>("reading");
-  const tabs: { id: Tab; label: string; icon: string }[] = [
-    { id: "reading", label: "Reading", icon: "▤" },
-    { id: "writing", label: "Writing", icon: "✎" },
-    { id: "speaking", label: "Speaking", icon: "◉" },
+  const tabs: { id: Tab; label: string; number: string }[] = [
+    { id: "reading", label: "Reading", number: "01" },
+    { id: "writing", label: "Writing", number: "02" },
+    { id: "speaking", label: "Speaking", number: "03" },
   ];
 
   return (
@@ -34,7 +34,7 @@ export default function IeltsPage() {
       <div role="tablist" aria-label="IELTS practice sections" className="mb-5 grid grid-cols-3 gap-2 rounded-2xl border border-line bg-surface/80 p-1.5">
         {tabs.map((item) => (
           <button key={item.id} role="tab" aria-selected={tab === item.id} onClick={() => setTab(item.id)} className={`min-h-11 rounded-xl px-2 py-2 text-sm font-bold transition ${tab === item.id ? "bg-accent/20 text-accent-light shadow-sm" : "text-ink-soft hover:text-ink"}`}>
-            <span aria-hidden="true" className="mr-2">{item.icon}</span>{item.label}
+            <span aria-hidden="true" className="mr-2 text-[10px] tracking-widest opacity-65">{item.number}</span>{item.label}
           </button>
         ))}
       </div>
